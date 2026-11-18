@@ -1,0 +1,13 @@
+/company_A/erp_goods_receipts.csv
+/company_A/invoice_tool_export.csv
+/company_A/labels_A.csv
+/company_A/taxonomy_A.csv
+/company_B/invoice_lines.csv
+/company_B/fx_rates_usd.csv
+/company_B/seed_labels.csv
+/company_B/taxonomy_B.csv
+/Cantill_DataML_Task_Brief.pdf
+/Untitled1.ipynb
+/output_template.csv
+/__pycache__/
+*.py[cod]

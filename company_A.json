@@ -1,0 +1,65 @@
+{
+  "sources": [
+    {
+      "file": "company_A/erp_goods_receipts.csv",
+      "prefix": "ERP:",
+      "id": "line_id",
+      "date_fields": ["posting_date"],
+      "feature_fields": ["material_short_text", "service_short_text", "material_type", "spend_type"],
+      "fields": {
+        "po": "po_number",
+        "po_line": "po_item",
+        "supplier_id": "vendor_id",
+        "supplier": "supplier_name",
+        "description": "material_short_text",
+        "account_description": "",
+        "item_code": "material_number",
+        "item_description": "material_short_text",
+        "amount": "value_zar",
+        "currency": "document_currency",
+        "date": "posting_date"
+      }
+    },
+    {
+      "file": "company_A/invoice_tool_export.csv",
+      "prefix": "TOOL:",
+      "id": "tool_record_id",
+      "date_fields": ["invoice_date"],
+      "feature_fields": ["line_text", "supplier_name_as_captured"],
+      "approved_statuses": ["Approved", "Paid"],
+      "cancelled_statuses": ["Cancelled", "Canceled"],
+      "gross_amount": true,
+      "default_tax_rate": 0.15,
+      "fields": {
+        "po": "po_reference",
+        "supplier": "supplier_name_as_captured",
+        "description": "line_text",
+        "account_description": "",
+        "item_code": "",
+        "item_description": "line_text",
+        "amount": "gross_amount",
+        "tax_rate": "vat_rate",
+        "currency": "currency",
+        "status": "status",
+        "date": "invoice_date"
+      },
+      "duplicate_fields": ["invoice_number", "supplier_name_as_captured", "po_reference", "line_text", "gross_amount"]
+    }
+  ],
+  "erp_source_prefix": "ERP:",
+  "taxonomy": {
+    "file": "company_A/taxonomy_A.csv",
+    "levels": ["category_l1", "category_l2", "category_l3"]
+  },
+  "labels": {
+    "file": "company_A/labels_A.csv",
+    "id": "record_id",
+    "include": "",
+    "supplier_key": "supplier_key",
+    "item_key": "item_key"
+  },
+  "item_identity_fields": ["item_code", "item_description"],
+  "exclusions": {
+    "keywords": ["\\b(intercompany|inter-company|royalt(?:y|ies)|sales tax|vat|financing charge|interest expense)\\b"]
+  }
+}

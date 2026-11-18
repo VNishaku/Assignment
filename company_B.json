@@ -1,0 +1,54 @@
+{
+  "sources": [
+    {
+      "file": "company_B/invoice_lines.csv",
+      "prefix": "",
+      "id": "line_id",
+      "date_fields": ["invoice_date", "posting_date", "due_date", "paid_date"],
+      "feature_fields": ["line_description", "material_number", "gl_account_description"],
+      "fields": {
+        "supplier_id": "vendor_id",
+        "po": "po_number",
+        "description": "line_description",
+        "account_description": "gl_account_description",
+        "item_code": "material_number",
+        "item_description": "line_description",
+        "amount": "line_amount",
+        "currency": "currency",
+        "rate": "currency_rate",
+        "date": "invoice_date",
+        "fallback_date": "posting_date"
+      },
+      "exclusions": {
+        "exact_fields": ["gl_account"],
+        "exact_values": {
+          "gl_account": ["GL40102", "GL40242", "GL40261"]
+        }
+      },
+      "duplicate_fields": ["vendor_id", "invoice_number", "invoice_line", "currency", "line_amount", "company_code"]
+    }
+  ],
+  "taxonomy": {
+    "file": "company_B/taxonomy_B.csv",
+    "levels": ["category_l1", "category_l2", "category_l3"]
+  },
+  "labels": {
+    "file": "company_B/seed_labels.csv",
+    "id": "line_id",
+    "include": "include",
+    "exclusion_reason": "exclusion_reason",
+    "supplier_key": "",
+    "item_key": ""
+  },
+  "item_identity_fields": ["item_code", "item_description"],
+  "fx": {
+    "reporting_currency": "USD",
+    "file": "company_B/fx_rates_usd.csv",
+    "currency": "currency",
+    "month": "month",
+    "rate": "units_per_usd"
+  },
+  "exclusions": {
+    "keywords": ["\\b(sales tax expense|intercompany|i/c payable|royalt(?:y|ies)|financing cost|interest expense)\\b"]
+  }
+}

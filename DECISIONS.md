@@ -1,0 +1,12 @@
+# Decisions and assumptions
+
+- The provided folder has Company A and B data only. It contains no A2/B2 refresh files, Company C data, or Company C taxonomy, so those blind-test outputs/configuration cannot yet be built or honestly named as blind results.
+- Every source record receives exactly one output row. Excluded records have spend zero and one of the four supplied exclusion codes; included records have a blank exclusion reason.
+- Only A invoice-tool rows carry an approval status. `Approved` and `Paid` are accepted; `Cancelled`/`Canceled` map to `CANCELLED`; other populated statuses map to `NOT_APPROVED`. ERP goods receipts have no status gate.
+- A tool records with an exact PO number also present in ERP are excluded as duplicates, following the task's preference for the ERP record. This intentionally prioritizes precision/recall of PO matching according to the given rule rather than fuzzy amount-only matching.
+- A uses net ERP amounts and removes the configured VAT from tool gross amounts; a missing A VAT rate is treated as 15%. Amount parsing accepts comma group separators and decimal points.
+- A nonnumeric or missing amount is reported to stderr and contributes zero spend without changing the inclusion decision, since the required exclusion codes do not describe data-quality failures.
+- B's line currency rate is interpreted as units of line currency per USD, so the USD amount is the line amount divided by that rate. When missing, the invoice month selects the FX table rate. If the table has no entry for that currency/month (five supplied lines), the posting month is the fallback; a missing rate at both dates is an error. Every configured nonblank date field is parsed and any failures are printed to stderr because the required output schema has no date-quality field.
+- Seed labels are treated as exact for the rows they cover, including their 450 non-procurement exclusions. The three B GL accounts most strongly associated with non-procurement in the seed set (GL40102, GL40242, and GL40261) are excluded for unlabeled rows; explicit account/text descriptions and configurable patterns also supplement those labels.
+- Supplier IDs are treated as globally meaningful within each company's input. Item identity uses the available item code and normalized description. Rows missing both cannot be reliably merged and receive a blank item key.
+- No external LLM or API is used; confidential data is processed locally.
