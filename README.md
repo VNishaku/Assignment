@@ -31,4 +31,4 @@ The CSV inputs are intentionally ignored by Git. Keep the supplied data locally 
 
 Labels are optional. If a config provides a labels file, the classifier uses character n-gram nearest-neighbour matching against those labelled descriptions. Without labels, it selects the closest category path based only on the category names in the supplied tree.
 
-The pipeline uses no LLM/API, so there is no external data transfer or per-line API cost.
+
